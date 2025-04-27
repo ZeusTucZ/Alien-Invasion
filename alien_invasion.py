@@ -5,10 +5,14 @@ import pygame
 
 from settings import Settings
 from game_stats import GameStats
-from button import Button
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
+
+from button import PlayButton
+from easy_button import EasyButton
+from medium_button import MediumButton
+from hard_button import HardButton
 
 class AlienInvasion:
     """Overall class to manage game assets and behavior."""
@@ -38,7 +42,10 @@ class AlienInvasion:
         self._create_fleet()
 
         # Make the play button
-        self.play_button = Button(self, "Play")
+        self.play_button = PlayButton(self, "Play")
+        self.easy_button = EasyButton(self, "Easy")
+        self.medium_button = MediumButton(self, "Medium")
+        self.hard_button = HardButton(self, "Hard")
 
     def run_game(self):
         """Start the main loop for the game."""
@@ -65,6 +72,33 @@ class AlienInvasion:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 self._check_play_button(mouse_pos)
+                self._check_easy_button(mouse_pos)
+                self._check_medium_button(mouse_pos)
+                self._check_hard_button(mouse_pos)
+
+    def _check_easy_button(self, mouse_pos):
+        """Select the easy button."""
+        button_clicked = self.easy_button.rect.collidepoint(mouse_pos)
+        if button_clicked and not self.game_active:
+            self.easy_button.is_selected = True
+            self.medium_button.is_selected = False
+            self.hard_button.is_selected = False
+
+    def _check_medium_button(self, mouse_pos):
+        """Select the medium button."""
+        button_clicked = self.medium_button.rect.collidepoint(mouse_pos)
+        if button_clicked and not self.game_active:
+            self.easy_button.is_selected = False
+            self.medium_button.is_selected = True
+            self.hard_button.is_selected = False
+
+    def _check_hard_button(self, mouse_pos):
+        """Select the hard button."""
+        button_clicked = self.hard_button.rect.collidepoint(mouse_pos)
+        if button_clicked and not self.game_active:
+            self.easy_button.is_selected = False
+            self.medium_button.is_selected = False
+            self.hard_button.is_selected = True
     
     def _check_play_button(self, mouse_pos):
         """Start a new game when the player clicks Play."""
@@ -237,6 +271,9 @@ class AlienInvasion:
         # Draw the play button if the game is inactive.
         if not self.game_active:
             self.play_button.draw_button()
+            self.easy_button.draw_button()
+            self.medium_button.draw_button()
+            self.hard_button.draw_button()
 
         pygame.display.flip()
 
