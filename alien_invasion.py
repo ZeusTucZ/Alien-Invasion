@@ -104,6 +104,16 @@ class AlienInvasion:
         """Start a new game when the player clicks Play."""
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.game_active:
+            # Adjust the difficulty
+            if self.easy_button.is_selected:
+                self.settings.initialize_dynamic_settings()
+            elif self.medium_button.is_selected:
+                self.settings.initialize_dynamic_settings()
+                self.settings.speedup_scale = 1.2
+            elif self.hard_button.is_selected:
+                self.settings.initialize_dynamic_settings()
+                self.settings.speedup_scale = 1.5
+
             # Reset the button settings
             self.settings.initialize_dynamic_settings()
             # Reset the game statistics.
@@ -202,6 +212,10 @@ class AlienInvasion:
         else:
             self.game_active = False
             pygame.mouse.set_visible(True)
+            self.easy_button.is_selected = False
+            self.medium_button.is_selected = False
+            self.hard_button.is_selected = False
+
 
     def _check_aliens_bottom(self):
         """Check if any aliens have reached the bottom of the screen."""
