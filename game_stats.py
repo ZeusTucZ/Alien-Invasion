@@ -1,5 +1,9 @@
 import pygame
 
+from pathlib import Path
+
+file = Path("text/high_score.txt")
+
 class GameStats:
     """Track statistics for Alien Invasion."""
 
@@ -9,7 +13,7 @@ class GameStats:
         self.reset_stats()
 
         # High score should never be reset.
-        self.high_score = 0
+        self.high_score = int(file.read_text())
 
     def reset_stats(self):
         """Initialize statistics that can change during the game."""
