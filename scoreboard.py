@@ -3,6 +3,10 @@ from pygame.sprite import Group
 
 from ship import Ship
 
+from pathlib import Path
+
+file = Path("text/high_score.txt")
+
 class Scoreboard:
     """A class to report scoring information"""
 
@@ -48,6 +52,7 @@ class Scoreboard:
         """Check to see if there's a new high score."""
         if self.stats.score > self.stats.high_score:
             self.stats.high_score = self.stats.score
+            file.write_text(str(self.stats.score))
             self.prep_high_score()
 
     def prep_score(self):
