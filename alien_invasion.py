@@ -108,33 +108,38 @@ class AlienInvasion:
         """Start a new game when the player clicks Play."""
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.game_active:
-            # Adjust the difficulty
-            if self.easy_button.is_selected:
-                self.settings.initialize_dynamic_settings()
-            elif self.medium_button.is_selected:
-                self.settings.initialize_dynamic_settings()
-                self.settings.speedup_scale = 1.2
-            elif self.hard_button.is_selected:
-                self.settings.initialize_dynamic_settings()
-                self.settings.speedup_scale = 1.5
+            self.initialize_settings()
+            self.reset_settings()
 
-            # Reset the button settings
+    def initialize_settings(self):
+        # Adjust the difficulty
+        if self.easy_button.is_selected:
             self.settings.initialize_dynamic_settings()
-            # Reset the game statistics.
-            self.stats.reset_stats()
-            self.sb.prep_images()
-            self.game_active = True
+        elif self.medium_button.is_selected:
+            self.settings.initialize_dynamic_settings()
+            self.settings.speedup_scale = 1.2
+        elif self.hard_button.is_selected:
+            self.settings.initialize_dynamic_settings()
+            self.settings.speedup_scale = 1.5
 
-            # Get rid of any remaining bullets and aliens.
-            self.bullets.empty()
-            self.aliens.empty()
+        # Get rid of any remaining bullets and aliens.
+        self.bullets.empty()
+        self.aliens.empty()
 
-            # Create a new fleet and center the ship.
-            self._create_fleet()
-            self.ship.center_ship()
+        # Create a new fleet and center the ship.
+        self._create_fleet()
+        self.ship.center_ship()
 
-            # Hide the moouse cursor.
-            pygame.mouse.set_visible(False)
+        # Hide the moouse cursor.
+        pygame.mouse.set_visible(False)
+
+    def reset_settings(self):
+        # Reset the button settings
+        self.settings.initialize_dynamic_settings()
+        # Reset the game statistics.
+        self.stats.reset_stats()
+        self.sb.prep_images()
+        self.game_active = True
 
     def _check_keydown_events(self, event):
         """Respond to keypresses."""
