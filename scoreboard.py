@@ -22,6 +22,9 @@ class Scoreboard:
         self.text_color = (30, 30, 30)
         self.font = pygame.font.SysFont(None, 48)
 
+        self.prep_images()
+
+    def prep_images(self):
         # Prepare the initial score images.
         self.prep_score()
         self.prep_high_score()
@@ -48,13 +51,6 @@ class Scoreboard:
         self.high_score_rect.centerx = self.screen_rect.centerx
         self.high_score_rect.top = self.score_rect.top
 
-    def check_high_score(self):
-        """Check to see if there's a new high score."""
-        if self.stats.score > self.stats.high_score:
-            self.stats.high_score = self.stats.score
-            file.write_text(str(self.stats.score))
-            self.prep_high_score()
-
     def prep_score(self):
         """Turn the score into a rendered image."""
         rounded_score = round(self.stats.score, -1)
@@ -75,6 +71,13 @@ class Scoreboard:
         self.level_rect = self.level_image.get_rect()
         self.level_rect.right = self.score_rect.right
         self.level_rect.top = self.score_rect.bottom + 10
+
+    def check_high_score(self):
+        """Check to see if there's a new high score."""
+        if self.stats.score > self.stats.high_score:
+            self.stats.high_score = self.stats.score
+            file.write_text(str(self.stats.score))
+            self.prep_high_score()
 
     def show_score(self):
         """Draw score, level and ships to the screen."""
