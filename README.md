@@ -40,3 +40,8 @@ pip install pygame
 
 # Run the game
 python alien_invasion.py
+```
+## Project Structure
+
+```
+```
