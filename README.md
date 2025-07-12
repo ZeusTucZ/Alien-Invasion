@@ -32,7 +32,7 @@ In **Alien Invasion**, you control a spaceship that must defend Earth by shootin
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/alien-invasion.git
+git clone https://github.com/ZeusTucZ/Alien-Invasion.git
 cd alien-invasion
 
 # Install dependencies
@@ -40,8 +40,4 @@ pip install pygame
 
 # Run the game
 python alien_invasion.py
-```
-## Project Structure
-
-```
 ```
